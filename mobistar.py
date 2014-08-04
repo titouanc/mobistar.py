@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*
+
 import requests
 import re
 
@@ -29,7 +32,7 @@ def auth(number, get_pin_callback=raw_input):
     assert '<result code="100">' in response.content
     
     # 2. Confirmation code
-    pin_code = get_pin_callback("Confirmation code (wait for SMS...) ? ")
+    pin_code = get_pin_callback("Confirmation code (wait for SMS…) ? ")
     query = ''.join((
         '<sendRegistrationCode ',
         'appId="%s" ' % (APP_ID),
@@ -43,7 +46,7 @@ def auth(number, get_pin_callback=raw_input):
 def send_sms(token, message, recipient):
     assert re.match(r'^\+32\d{9}$', recipient)
     query = ''.join((
-        '<sendSMS appId="5945678226665077779">',
+        '<sendSMS appId="%s">' % (APP_ID),
         '<key>%s</key>' % (token),
         '<text>%s</text>' % (message),
         '<phoneNumber>%s</phoneNumber>' % (recipient),
@@ -58,7 +61,7 @@ if __name__ == "__main__":
     from sys import argv
 
     if len(argv) < 3:
-        print "USAGE: sms NUMBER MESSAGE..."
+        print "USAGE: %s NUMBER MESSAGE..." % (argv[0])
         exit()
 
     token_file = ENV['HOME']+'/.mobistar_token'
