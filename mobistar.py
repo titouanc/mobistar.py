@@ -46,7 +46,7 @@ def auth(number, get_pin_callback=raw_input):
 def send_sms(token, message, recipient):
     assert re.match(r'^\+32\d{9}$', recipient)
     query = ''.join((
-        '<sendSMS appId=%s>' % (APP_ID),
+        '<sendSMS appId="%s">' % (APP_ID),
         '<key>%s</key>' % (token),
         '<text>%s</text>' % (message),
         '<phoneNumber>%s</phoneNumber>' % (recipient),
