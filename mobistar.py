@@ -61,7 +61,7 @@ if __name__ == "__main__":
     from sys import argv
 
     if len(argv) < 3:
-        print "USAGE: sms NUMBER MESSAGE..."
+        print "USAGE: %s NUMBER MESSAGE..." % (argv[0])
         exit()
 
     token_file = ENV['HOME']+'/.mobistar_token'
