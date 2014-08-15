@@ -52,7 +52,7 @@ def send_sms(token, message, recipient):
     query = ''.join((
         '<sendSMS appId="%s">' % (APP_ID),
         '<key>%s</key>' % (token),
-        '<text>%s</text>' % (message),
+        '<text><![CDATA[%s]]></text>' % (message),
         '<phoneNumber>%s</phoneNumber>' % (str(number)),
         '</sendSMS>'
     ))
