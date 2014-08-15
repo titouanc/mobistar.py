@@ -1,4 +1,4 @@
-from phonenumber import PhoneNumber
+from mobistarpy.phonenumber import PhoneNumber
 from pytest import raises
 
 def test_invalid():

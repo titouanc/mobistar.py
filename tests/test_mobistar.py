@@ -1,4 +1,4 @@
-import mobistar
+import mobistarpy.sms as mobistar
 from mock import MagicMock
 from pytest import raises
 
