@@ -2,6 +2,7 @@ import mobistarpy.sms as mobistar
 from mock import MagicMock
 from pytest import raises
 
+
 def setup_function(*args, **kwargs):
     mobistar.requests = MagicMock()
 
@@ -12,7 +13,10 @@ def test_request():
 
 
 def test_extract_message():
-    assert mobistar._extract_message("<message><![CDATA[Some text]]></message>") == 'Some text'
+    assert (
+        mobistar._extract_message("<message><![CDATA[Some text]]></message>")
+        == 'Some text'
+    )
     with raises(AssertionError):
         mobistar._extract_message("Some text")
 
@@ -24,15 +28,33 @@ def test_auth():
     mobistar.requests.post = MagicMock(return_value=res)
 
     def get_pin(a):
-        res.content = '''<result code="100"><message><![CDATA[123456 123456789abcdef123456789abcdef12\r]]></message></result>'''
+        res.content = '''<result code="100">
+        <message><![CDATA[123456 123456789abcdef1234567abcdef12\r]]></message>
+        </result>'''
         return "13J7"
 
-    assert mobistar.auth("+32499123456", get_pin) == "123456 123456789abcdef123456789abcdef12"
+    assert (
+        mobistar.auth("+32499123456", get_pin) ==
+        "123456 123456789abcdef1234567abcdef12"
+    )
+    assert mobistar.requests.post.called
 
 
 def test_send_sms():
     class res:
         status_code = 200
-        content = '''<result code="100"><message><![CDATA[123456789]]></message></result>'''
+        content = '''<result code="100">
+        <message><![CDATA[123456789]]></message>
+        </result>'''
     mobistar.requests.post = MagicMock(return_value=res)
     assert mobistar.send_sms('12345', "Hello", '0471234567') == '123456789'
+    assert mobistar.requests.post.called
+
+
+def test_junk_sms():
+    class res:
+        status_code = 200
+        content = ''
+    mobistar.requests.post = MagicMock(return_value=res)
+    with raises(AssertionError):
+        mobistar.send_sms('12345', "Hello", '0471234567') == '123456789'

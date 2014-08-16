@@ -20,11 +20,11 @@ class PhoneNumber(object):
     def __repr__(self):
         res = str(self)
         return ' '.join((res[:3], res[3:6], res[6:8], res[8:10], res[10:]))
-        
+
     def is_belgian_gsm(self):
         return (
-            self.int_prefix == '+32' and 
-            self.number[0] == '4' and 
+            self.int_prefix == '+32' and
+            self.number[0] == '4' and
             self.number[1] in ('7', '8', '9') and
             len(self.number) == 9
         )

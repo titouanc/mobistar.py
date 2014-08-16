@@ -1,15 +1,18 @@
 from mobistarpy.phonenumber import PhoneNumber
 from pytest import raises
 
+
 def test_invalid():
     with raises(PhoneNumber.Invalid):
         PhoneNumber("caca")
         PhoneNumber("+32")
 
+
 def test_str():
     p = PhoneNumber('0470123456')
     assert str(p) == '+32470123456'
     assert repr(p) == '+32 470 12 34 56'
+
 
 def test_is_belgian_gsm():
     assert PhoneNumber('+32477123456').is_belgian_gsm()
@@ -28,6 +31,7 @@ def test_is_belgian_gsm():
 
     # Too much digits
     assert not PhoneNumber('+3241234567').is_belgian_gsm()
+
 
 def test_transitivity():
     number = "+32494123456"
