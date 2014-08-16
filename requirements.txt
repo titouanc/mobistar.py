@@ -3,4 +3,5 @@ mock
 pytest
 pytest-cov
 pytest-flakes
+pytest-pep8
 requests
